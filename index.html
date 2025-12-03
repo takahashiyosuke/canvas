@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <title>GeoPlan Pro | 幾何規劃與比例尺工具</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <section id="landingPage" class="landing">
+    <div class="landing-content">
+      <div class="hero-badge">v2.0 Infinite Canvas</div>
+      <h1 class="hero-title">精準規劃，<br/>從未如此簡單。</h1>
+      <p class="hero-desc">
+        專為工程師、設計師打造的輕量級幾何規劃工具。<br/>
+        匯入底圖、校正比例、拖曳佈局，一切都在瀏覽器中完成。
+      </p>
+      <div class="features-grid">
+        <div class="feature-item"><span class="icon">📐</span><h3>精準比例尺</h3><p>校正像素與物理尺寸。</p></div>
+        <div class="feature-item"><span class="icon">✨</span><h3>無限畫布</h3><p>自由縮放、平移底圖。</p></div>
+        <div class="feature-item"><span class="icon">🚀</span><h3>快速匯出</h3><p>一鍵生成標註 PNG。</p></div>
+      </div>
+      <button id="startBtn" class="cta-btn">開始使用 ➜</button>
+    </div>
+  </section>
+
+  <div id="app" class="app-container" hidden>
+    <nav class="navbar glassy">
+      <button id="homeBtn" class="icon-btn" title="回首頁">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+      </button>
+      <div class="divider"></div>
+      <span class="app-title">GeoPlan <b>Pro</b></span>
+      <div class="spacer"></div>
+      <div class="status-bar">
+        <span id="scaleInfo" class="status-pill">未校正比例</span>
+        <span id="hint" class="status-text">請匯入底圖</span>
+      </div>
+    </nav>
+
+    <div class="toolbar glassy">
+      <label class="tool-btn primary" for="fileInput" title="匯入圖片">
+        <input id="fileInput" type="file" accept=".png,.jpg,.jpeg" hidden />
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+        <span>匯入</span>
+      </label>
+      <div class="divider-v"></div>
+      <button id="calibrateBtn" class="tool-btn" title="校正比例尺 (C)">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12h20"></path><path d="M2 12v3"></path><path d="M22 12v3"></path><path d="M7 12v3"></path><path d="M12 12v3"></path><path d="M17 12v3"></path></svg>
+      </button>
+      <button id="squareBtn" class="tool-btn" title="正方形 (S)">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"></rect></svg>
+      </button>
+      <button id="rectBtn" class="tool-btn" title="長方形 (R)">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"></rect></svg>
+      </button>
+      <div class="divider-v"></div>
+      <button id="exportBtn" class="tool-btn" title="匯出 PNG">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+      </button>
+    </div>
+
+    <main id="stageWrap">
+      <div id="world">
+        <canvas id="bgCanvas"></canvas>
+        <svg id="overlay" xmlns="http://www.w3.org/2000/svg"></svg>
+      </div>
+    </main>
+    
+    <ul id="contextMenu" class="ctx-menu" hidden>
+      <li id="contextDelete" class="danger">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+        刪除物件
+      </li>
+    </ul>
+
+    <div class="zoom-controls glassy">
+      <button id="zoomOutBtn">−</button>
+      <span id="zoomLevel">100%</span>
+      <button id="zoomInBtn">＋</button>
+      <button id="fitBtn" title="適應視窗">Fit</button>
+    </div>
+  </div>
+
+  <script src="export.module.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
